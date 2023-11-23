@@ -1,3 +1,4 @@
+// useGetTime 훅 활용
 function Home() {
   return (
     <div>

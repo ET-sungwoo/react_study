@@ -1,39 +1,20 @@
 import { useEffect, useState } from 'react';
 import './style.css';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo } from '../../store/slice/authSlice';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+// import useLoginMutate from '../../api/login';
 
+/* 
+Todo
+1. useLoginMutate 사용해 로그인 구현
+*/
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const isLogin = useSelector((state) => state.auth.isLogin);
 
-  const handleLogin = async () => {
-    try {
-      const {
-        data: { access_token },
-      } = await axios.post('http://127.0.0.1:3000/auth/login', {
-        username,
-        password,
-      });
-      const {
-        data: { username: userName },
-      } = await axios.get('http://127.0.0.1:3000/auth/profile', {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      dispatch(setUserInfo(userName));
-    } catch (error) {
-      console.error('로그인 실패');
-      console.error(error);
-    }
-  };
+  const handleLogin = () => {};
 
   useEffect(() => {
     if (isLogin) {
