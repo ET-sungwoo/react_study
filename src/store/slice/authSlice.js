@@ -21,7 +21,7 @@ export const { reducer: authReducer, actions } = createSlice({
     },
 
     setUserInfo(state, { payload }) {
-      state.username = payload;
+      state.username = payload.username;
       state.isLogin = true;
     },
   },

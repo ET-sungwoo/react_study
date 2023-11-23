@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '../../store/slice/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { saveUserInfoToLocalStorage } from '../../utils/auth/useInfo';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -20,15 +21,14 @@ const Login = () => {
         username,
         password,
       });
-      const {
-        data: { username: userName },
-      } = await axios.get('http://127.0.0.1:3000/auth/profile', {
+
+      const { data } = await axios.get('http://127.0.0.1:3000/auth/profile', {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
-
-      dispatch(setUserInfo(userName));
+      saveUserInfoToLocalStorage({ id: data.sub, username: data.username });
+      dispatch(setUserInfo(data));
     } catch (error) {
       console.error('로그인 실패');
       console.error(error);
